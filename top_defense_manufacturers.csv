@@ -1,0 +1,101 @@
+this_year_rank ,last_year_rank ,company ,leadership ,country ,defense_revenue,defense_revenue_new,defense_revenue_change_percent ,total_revenue ,revenue_fom_defense
+1,1,Lockheed Martin 1 2,"James D. Taiclet, Chairman, President and CEO",U.S.,62562,56606,0.11,65398,96%
+2,NEW,Raytheon Technologies 3,"Greg Hayes, CEO and Executive Chairman",U.S.,42000,0,N/A,65000,65%
+3,2,Boeing 4,"David Calhoun, President and CEO",U.S.,32400,34300,-0.06,58158,56%
+4,4,Northrop Grumman,"Kathy J. Warden, Chairman, CEO and President",U.S.,31400,28600,0.1,36799,85%
+5,3,General Dynamics 5,"Phebe Novakovic, Chairman and CEO",U.S.,29800,29512,0.01,37900,79%
+6,6,Aviation Industry Corporation of China,"Tan Ruisong, Chairman of the Board, and Luo Ronghuai, President",China,25468.59,25075.38,0.02,67911.42,38%
+7,7,BAE Systems 1,"Charles Woodburn, Group CEO",U.K.,23502.38,21033.27,0.12,24739.35,95%
+8,8,China North Industries Group Corporation Limited,"Jiao Kaihe, Chairman, and Liu Dashan, President",China,15249.27,14771.6,0.03,70303.18,22%
+9,9,L3Harris Technologies 6,"Bill Brown, Chair and CEO",U.S.,14936,14602,0.02,18194,82%
+10,NEW,China State Shipbuilding Corporation Limited 7,"Lei Fanpei, Chairman, and Yang Jincheng, Director and General Manager",China,13379.35,10481.85,0.28,66911.23,20%
+11,11,China Aerospace Science and Industry Corporation,"Yuan Jie, Chairman, and Liu ShiQuan, President",China,12060.26,12035.25,0,37702.8,32%
+12,12,Airbus 8,"Guillaume Faury, CEO",Netherlands/France,12004.28,11266.57,0.07,56970.41,21%
+13,13,Leonardo,"Alessandro Profumo, CEO",Italy,11173.33,11109.27,0.01,15306.4,73%
+14,18,China South Industries Group Corporation,"Xu Xianping, Chairman of the Group and Secretary of the Party Committee, and Gong Yangde, Group Company Director and General Manager",China,10697.68,8845.87,0.21,34499.29,31%
+15,15,China Electronics Technology Group,"Xiong Qunli, Chairman, and Wu Manqing, President *",China,10465.75,10148.87,0.03,33977.45,31%
+16,16,Thales,"Patrice Caine, Chairman and CEO",France,9228.36,9251.68,0,19391.53,48%
+17,19,Huntington Ingalls Industries,"Mike Petters, President and CEO",U.S.,8654.37,8119,0.07,9361,92%
+18,20,China Aerospace Science and Technology Corporation,"Wu Yansheng, Chairman of the Board, and Xu Qiang, President",China,8305.92,7745.57,0.07,38804.45,21%
+19,23,Leidos 9,"Roger Krone, Chairman and CEO",U.S.,7341,6300,0.17,12300,60%
+20,17,Almaz-Antey,"Yan Novikov, CEO",Russia,6066.31,9191.6,-0.34,6600.93,92%
+21,25,Honeywell,"Darius Adamczyk, Chairman and CEO",U.S.,5826,5326,0.09,32637,18%
+22,26,Booz Allen Hamilton,"Horacio D. Rozanski, President and CEO",U.S.,5470.21,5182.96,0.06,7858.94,70%
+23,46,Amentum 10 11,"John Vollmer, CEO",U.S.,5000,2700,0.85,6600,76%
+24,NEW,Edge Group 11,"Faisal Al Bannai, CEO and Managing Director",United Arab Emirates,5000,0,N/A,5000,100%
+25,27,Rolls-Royce,"Warren East, CEO",U.K.,4863.94,4712.36,0.03,15092.33,32%
+26,28,Safran,"Olivier Andries, CEO *",France,4707.2,4413.05,0.07,18831.1,25%
+27,29,General Electric 1,"H. Lawrence Culp, Chairman of the Board and CEO *",U.S.,4386,4400,0,79619,6%
+28,32,Hanwha 12,"Seung Youn Kim, Chairman",South Korea,4293.68,3976.23,0.08,6907.81,62%
+29,33,Rheinmetall,"Armin Papperger, CEO",Germany,4249.5,3942.46,0.08,6705.82,63%
+30,31,Elbit Systems,"Bezhalel Machlis, President and CEO",Israel,4222.7,4056,0.04,4662.6,91%
+31,34,CACI International,"John Mengucci, President and CEO",U.S.,3999.26,3489.85,0.15,5720.04,70%
+32,21,Mitsubishi Heavy Industries 13,"Seiji Izumisawa, President and CEO",Japan,3788.12,6570,-0.42,31465.15,12%
+33,30,Naval Group,"Pierre Eric Pommellet, CEO",France,3766.68,4155.14,-0.09,3766.68,100%
+34,22,Dassault,"Eric Trappier, Chairman and CEO",France,3724.44,5708.84,-0.35,6265.24,59%
+35,38,Textron,"Scott C. Donnelly, Chairman, President and CEO",U.S.,3449,3271.2,0.05,11651,30%
+36,40,Saab,"Micael Johansson, President and CEO",Sweden,3385.41,3185.19,0.06,3848.42,88%
+37,41,Israel Aerospace Industries,"Boaz Levy, President and CEO*",Israel,3325,3006,0.11,4184,79%
+38,36,SAIC,"Nazzic Keene, CEO",U.S.,3292,3317.08,-0.01,7056,47%
+39,37,Perspecta,"Mac Curtis, President and CEO",U.S.,3101,3300,-0.06,4504,69%
+40,47,Bechtel,"Brendan Bechtel, Chairman and CEO",U.S.,3100,2303,0.35,17600,18%
+41,45,Hindustan Aeronautics Limited,"Rajagopalan Madhavan, Chairman and Managing Director",India,3000,2710,0.11,3240,93%
+42,35,Tactical Missiles Corporation,"Boris Obnosov, Director General",Russia,2919.63,3474.9,-0.16,2979.21,98%
+43,43,KNDS 14,"Frank Haun, CEO *",Netherlands,2898.06,2798.45,0.04,2898.06,100%
+44,44,Rafael Advanced Defense Systems,"Yoav Har-Even, President and CEO",Israel,2787.58,2746.65,0.01,2787.58,100%
+45,42,KBR,"Stuart Bradie, President and CEO",U.S.,2739.74,2852.62,-0.04,5766.77,48%
+46,49,Jacobs,"Steve Demetriou, Chair of the Board and CEO",U.S.,2498,2115,0.18,13567,18%
+47,50,Oshkosh Corporation,"John Pfeifer, President and CEO *",U.S.,2262.2,2032,0.11,6856.8,33%
+48,48,Aselsan 15,"Haluk Gorgun, Chairman, President and CEO",Turkey,2218.33,2172.57,0.02,2311.71,96%
+49,58,Fincantieri,"Giuseppe Bono, CEO",Italy,2211.96,1682.74,0.31,6710.91,33%
+50,52,TransDigm,"Kevin Stein, President, CEO and Director",U.S.,2180,1932.59,0.13,5103,43%
+51,NEW,Kawasaki Heavy Industries 13,"Yasuhiko Hashimoto, Representative Director, President and CEO",Japan,2026.5,0,N/A,14034.82,14%
+52,NEW,ManTech,"Kevin M. Phillips, Chairman of the Board, CEO and President",U.S.,1964,0,N/A,2518.38,78%
+53,59,Sierra Nevada Corporation,"Eren Ozmen, Chairwoman, President and Owner, and Fatih Ozmen, CEO and Owner",U.S.,1918,1591,0.21,2383,80%
+54,NEW,Parsons Corporation 16,"Carey Smith, CEO",U.S.,1911.91,1887.91,0.01,3900,49%
+55,57,ST Engineering,"Vincent Chong, Group President and CEO",Singapore,1885.29,1685.8,0.12,5220.8,36%
+56,60,Serco 17,"Rupert Soames, Group CEO",U.K.,1736.39,1493.76,0.16,4985.86,35%
+57,55,Korea Aerospace Industries,"Ahn Hyun-ho, President and CEO",South Korea,1716.71,1740.87,-0.01,2384.55,72%
+58,NEW,BWX Technologies,"Rex D. Geveden, President and CEO",U.S.,1634.58,1471.28,0.11,2123.52,77%
+59,66,Ball Corporation,"John A. Hayes, Chairman and CEO",U.S.,1495,1256,0.19,11800,13%
+60,51,Aerojet Rocketdyne Holdings,"Eileen Drake, CEO and President",U.S.,1472,1982,-0.26,2073,71%
+61,61,Bharat Electronics Limited,"M V Gowtama, Chairman and Managing Director",India,1440,1390,0.04,1910,75%
+62,62,Melrose Industries 18,"Simon Peckham, Chief Executive",U.K.,1416.83,1376.3,0.03,12013.54,12%
+63,63,Vectrus,"Charles Prow, President and CEO",U.S.,1383.9,1367.63,0.01,1395.53,99%
+64,67,Hensoldt,"Thomas Mueller, CEO",Germany,1377.58,1247.17,0.1,1377.58,100%
+65,68,LIG Nex1,"Kim Ji-Chan, President and CEO",South Korea,1357.05,1246.42,0.09,1357.05,100%
+66,65,QinetiQ 1 19,"Steve Wadey, CEO",U.K.,1270.16,1023.1,0.24,1671.27,76%
+67,72,Curtiss-Wright Corporation 20,"Lynn M. Bamford, President and CEO *",U.S.,1263.29,1079.05,0.17,2391.34,53%
+68,53,Turkish Aerospace Industries,"Temel Kotil, President and CEO",Turkey,1256.42,1858.35,-0.32,1504.33,84%
+69,64,Austal,"Paddy Gregg, CEO *",Australia,1239.39,1289.64,-0.04,1399.81,89%
+70,71,Moog Inc.,"John R. Scannell, Chairman and CEO",U.S.,1238.36,1081.43,0.15,2884.55,43%
+71,69,Viasat,"Richard Baldridge, President and CEO *",U.S.,1066.3,1138.1,-0.06,2256.11,47%
+72,77,Kongsberg Gruppen,"Geir Haoy, President and CEO",Norway,1064.72,823.43,0.29,2726.96,39%
+73,NEW,Maxar Technologies 21,"Dan Jablonsky, CEO",U.S.,1062,940,0.13,1723,62%
+74,NEW,Alion Science and Technology 1,"Steve Schorer, Chairman and CEO",U.S.,1045,846,0.24,1100,95%
+75,NEW,Aerospace Corporation,"Steven J. Isakowitz, President and CEO",U.S.,1032,0,N/A,1500,69%
+76,NEW,Navantia,"Ricardo Domínguez García-Baquero, Chairman",Spain,999.24,1082.62,-0.08,1242.78,80%
+77,NEW,Howmet Aerospace 1 22,"John C. Plant, Executive Chairman and Co-CEO",U.S.,999.21,0,N/A,5259,19%
+78,73,Meggitt,"Tony Wood, CEO",U.K.,985.62,1052.01,-0.06,2156.05,46%
+79,NEW,Mitre,"Jason Providakes, President and CEO",U.S.,984,0,N/A,1800,55%
+80,70,PAE 23,"Charles Peiffer, Interim President and CEO, Executive Vice President, and Chief Financial Officer",U.S.,932.51,1082,-0.14,2238.28,42%
+81,74,CAE 24,"Marc Parent, President and CEO",Canada,921.35,1001.08,-0.08,2257.5,41%
+82,NEW,Fluor Corporation 25,"David Constable, CEO",U.S.,864.2,647.6,0.33,15700,6%
+83,75,Ultra Electronics,"Simon Pryce, CEO",U.K.,832.9,906.26,-0.08,1103.43,75%
+84,81,AAR Corporation,"John M. Holmes, President and CEO",U.S.,812.77,739.79,0.1,2112.45,38%
+85,NEW,Subaru Corporation 13,"Tomomi Nakamura, Representative Director, President and CEO",Japan,805.5,0,N/A,26692.56,3%
+86,NEW,HEICO 26,"Laurans A. Mendelson, Chairman of the Board, CEO and Director",U.S.,786.28,719.48,0.09,1787.01,44%
+87,85,Mercury Systems,"Mark Aslett, President and CEO",U.S.,776.17,622.59,0.25,796.61,97%
+88,NEW,FLIR Systems,"James J. Cannon, President and CEO",U.S.,767.63,794.94,-0.03,1923.69,40%
+89,NEW,Woodward Inc.,"Thomas A. Gendron, Chairman of the Board, CEO and President",U.S.,764,0,N/A,2500,31%
+90,78,Day & Zimmermann,"Hal Yoh, Chair and CEO",U.S.,741.94,821.1,-0.1,2396,31%
+91,NEW,Lumen Technologies,"Jeff Storey, President and CEO",U.S.,728.29,651.28,0.12,20756,4%
+92,87,Battelle,"Lewis Von Thaer, President and CEO",U.S.,705,560,0.26,9200,8%
+93,95,Hyundai Rotem Company,"Yong-Bae Lee, CEO",South Korea,697.48,449.82,0.55,2361.93,30%
+94,NEW,Kratos,"Eric DeMarco, President and CEO",U.S.,686,0,N/A,747.7,92%
+95,79,Embraer,"Francisco Gomes Neto, President and CEO",Brazil,653.87,775,-0.16,3771.11,17%
+96,84,Peraton 27,"Stu Shea, Chairman, President and CEO",U.S.,651.2,631.29,0.03,1034.06,63%
+97,NEW,Ukroboronprom,"Yuriy Husyev, Director General",Ukraine,650.61,764.98,-0.15,1379.95,47%
+98,82,Cubic Corporation,"Bradley H. Feldmann, Chairman, President and CEO",U.S.,634.7,646.7,-0.02,1476,43%
+99,NEW,Spirit AeroSystems,"Tom Gentile, President and CEO",U.S.,613,0,N/A,3405,18%
+100,83,Indra,"Ignacio Mataix, CEO, and Cristina Ruiz, CEO *",Spain,594.33,633.57,-0.06,3473.8,17%
