@@ -1,0 +1,93 @@
+---
+title: "ML Assignment-2"
+author: "Abhinay Chiranjeeth Marneni"
+date: "2022-10-06"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading Packages
+
+```{r}
+library(caret)
+library(class)
+library(ISLR)
+library(dplyr)
+library(ggplot2)
+library(fastDummies)
+library(knitr)
+```
+
+#Importing the Universalbank.csv files to exacted the data into variables 
+
+```{r }
+getwd()
+setwd("C:/Users/abhin/Downloads")
+Universal_bank <- read.csv("UniversalBank.csv")
+Universal_bank <-Universal_bank[,c(2,3,4,6,7,8,9,10,11,12,13,14)]
+Universal_bank$Personal.Loan<-as.factor(Universal_bank$Personal.Loan)
+Universal_bank$Education<-as.factor(Universal_bank$Education)
+Universal_bank <- dummy_columns(Universal_bank,select_columns = 'Education')
+Universal_bank <-Universal_bank[,c("Personal.Loan",'Age','Experience','Income',"Family","CCAvg","Education_1","Education_2","Education_3","Mortgage","Securities.Account","CD.Account","Online","CreditCard")]
+summary(Universal_bank)
+```
+# To separation the collecting data into training(60%) and validation(40%) ,Normalize Data and testing data
+
+```{r}
+set.seed(400)
+Index_Train<-createDataPartition(Universal_bank$Personal.Loan, p=0.6, list=FALSE)
+Universal_bank_Train <-Universal_bank[Index_Train,]
+Universal_bank_Validation  <-Universal_bank[-Index_Train,]
+train_label<- Universal_bank_Train[,1]
+validation_label<- Universal_bank_Validation[,1]
+norm_var <- c("Age","Experience","Income","Family","CCAvg","Mortgage")
+norm_model<-preProcess(Universal_bank_Train[,norm_var], method = c("center", "scale"))
+Universal_bank_norm_Train <-predict(norm_model,Universal_bank_Train)
+Universal_bank_norm_Validation  <-predict(norm_model,Universal_bank_Validation)
+Universal_bank_test<-Universal_bank[0,-1]
+test_data<-c(40,10,84,2,2,0,1,0,0,0,0,1,1)
+Universal_bank_test[nrow(Universal_bank_test) + 1, ] <- test_data
+Universal_bank_norm_test<-predict(norm_model,Universal_bank_test)
+```
+
+# KNN model Classification
+
+```{r}
+set.seed(500)
+train_predictor<- Universal_bank_norm_Train[-1]
+Loan_predicted <-knn(train_predictor,Universal_bank_norm_test, cl=train_label,
+			   k=1)
+print(Loan_predicted)
+```
+# Again separated the data sets to apply the K-NN method
+```{r}
+Serach_grid <- expand.grid(k=c(1:14))
+trctrl <- trainControl(method = "boot")
+model<-train(Personal.Loan~.,data=Universal_bank_norm_Train,trControl=trctrl,
+             method="knn", tuneGrid=Serach_grid
+            )
+plot(model)
+model
+model$bestTune[[1]]
+Loan_predicted_1 <-knn(train_predictor,Universal_bank_norm_test, cl=train_label,
+			   k=model$bestTune[[1]])
+Loan_predicted_1
+validation_model<-train(Personal.Loan~.,data=Universal_bank_norm_Validation,trControl=trctrl,
+             method="knn", tuneGrid=Serach_grid
+            )
+Loan_predicted_2 <-knn(train_predictor,Universal_bank_norm_Validation[-1], cl=train_label,
+			   k=model$bestTune[[1]])
+valid.model<-train(Universal_bank_norm_Validation[-1],Loan_predicted_2,trControl=trctrl,
+             method="knn", tuneGrid=Serach_grid
+            )
+plot(valid.model)
+valid.model
+library("gmodels")
+s<-CrossTable(x=validation_label,y=Loan_predicted_2, prop.chisq = FALSE)
+```
