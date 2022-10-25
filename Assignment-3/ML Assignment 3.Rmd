@@ -1,0 +1,131 @@
+---
+title: "ML Assignment 3"
+author: "Abhinay Chiranjeetgh Marneni"
+date: "2022-10-11"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#  Loading library functions Packages
+
+```{r}
+library(class)
+library(caret)
+library(ISLR)
+library(dplyr)
+library(gmodels)
+library(ggplot2)
+library(knitr)
+library(e1071)
+library(pROC)
+```
+
+# Importing the Uviversal bank.csv file and to exarct the data into  factor variables 
+
+```{r}
+
+data1<-read.csv("C:/Users/abhin/OneDrive/Documents/Assigments Buss 1sem/ML/UniversalBank.csv",header=TRUE)
+head(data1)
+data1$Personal.Loan <- as.factor(data1$Personal.Loan)
+data1$Online <- as.factor(data1$Online)
+data1$CreditCard <- as.factor(data1$CreditCard)
+is.factor(data1$Personal.Loan)
+is.factor(data1$Online)
+is.factor(data1$CreditCard)
+
+```
+
+# Partition the collecting data
+```{r}
+set.seed(400)
+data_partition<-createDataPartition(data1$Personal.Loan,p=.6,list=FALSE,times=1)
+train<-data1[data_partition,]
+valid<-data1[-data_partition,]
+head(train)
+head(valid)
+```
+# Normalizing the data
+```{r}
+norm <- preProcess(train[,-c(10,13,14)], method=c("center","scale"))
+train_norm <-predict(norm,train)
+valid_norm<- predict(norm,valid)
+head(valid_norm)
+head(train_norm)
+
+```
+
+
+# A. Generate a pivot table for the training data utilising Online as a column variable, CC and Loan as Variable 
+```{r}
+
+table_loan<-table(train_norm$CreditCard,train_norm$Personal.Loan,train_norm$Online)
+View(table_loan)
+```
+# B.The probability of loan acceptance (Loan = 1) conditional on having a bank credit card (CC = 1) and being an active user of online banking services (Online = 1) = (47 /(473+47))=0.09038461538
+
+# C.Making two pivot table for training data that can assist Online with Loan & Credit Card with Loan
+
+## 1. Online with Loan
+```{r}
+table_1<-table(train_norm$Personal.Loan,train_norm$Online)
+View(table_1)
+```
+
+## 2. CreditCard with Loan
+```{r}
+table_2<-table(train_norm$Personal.Loan,train_norm$CreditCard)
+View(table_2)
+```
+## loan =1 probabaility of loan
+```{r}
+table_3<-table(train_norm$Personal.Loan)
+prop<-prop.table(table_3)
+View(prop)
+```
+# D. the table Caculations Based on Pivot Tables, Individual Probabilities CC Given Loan
+
+## i. P(CC = 1 | Loan = 1) (the proportion of credit card holders among the loan acceptors) =85/288=0.2951
+
+## ii. P(Online = 1 | Loan = 1)= 171/288=0.5937
+
+## iii. P(Loan = 1) (the proportion of loan acceptors) =0.096
+
+## iv. P(CC = 1 | Loan = 0)  =799/(799+1913)=0.2946
+
+## v. P(Online = 1 | Loan = 0) =1629/(1629+1083)=0.6006
+
+## vi. P(Loan = 0) =0.904
+
+# E. Naive Bayes
+
+## Naive Bayes = P(Loan=1/CC=1,Online=1) = P(CC=1/Loan=1)P(Online=1/Loan=1)P(Loan=1)/P(CC=1/Loan=1)P(Online=1/Loan=1)P(Loan=1)+P(CC=1/Loan=0)P(Online=1/Loan=0)P(Loan=0) =0.09514777745
+
+## Naive Bayes Probability is  0.09514777745
+
+# F. Compared of probabilities using a pivot table and naive bayes probability
+
+## The Probability obtained using pivot table is 0.09038461538
+## The Probability obtained using Naive bayes formula is 0.09514777745
+## Calculation of increase the actual value of probability is 0.00476316207
+
+# G.Applying the above-calculated values to determine the naive Bayes probability P(Loan = 1 | CC = 1, Online = 1)
+```{r}
+
+model<-naiveBayes(Personal.Loan~CreditCard+Online,data=train_norm)
+
+model
+
+``` 
+
+
+
+
+
+
+
+
+
