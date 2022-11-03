@@ -1,0 +1,127 @@
+---
+title: "ML Assignment 4"
+author: "Abhinay Chiranjeeth Marneni"
+date: "2022-11-01"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## loading library functions packages
+```{r}
+library(tidyverse)  
+library(flexclust)
+library(cluster)
+library(factoextra) 
+library(FactoMineR)
+library(gridExtra)
+library(ggcorrplot)
+library(dplyr)
+```
+
+## Importing the Pharmaceuticals.csv file
+```{r}
+data<- read.csv("C:/Users/abhin/OneDrive/Documents/Assigments Buss 1sem/ML/Pharmaceuticals.csv") # import the data
+view(data) # using view function to display the whole table 
+head(data) # Using head function to view the 6rows of dataset
+```
+# A.Use only the numerical variables (1 to 9) to cluster the 21 firms. Justify the various choices made in 
+conducting the cluster analysis, such as weights for different variables, the specific clustering algorithm(s) 
+used, the number of clusters formed, and so on. 
+```{r}
+set.seed(450)
+da <- data [,3:11]
+summary(da)
+```
+```{r}
+# To scale the data from the variables are measured using various weights throughout the rows
+set.seed(450)
+data1 <- scale(da)
+row.names(data1) <- data[,1]
+distance <- get_dist(data1)
+fviz_dist(distance)
+head(round(as.matrix(distance), 2),4)# To calculating the distance between the rows of data and viewing the distance matrix.
+```
+## To check the major variables, I using the correlation matrix method
+```{r}
+set.seed(450)
+corr <- cor(data1)
+ggcorrplot(corr, outline.color = "blue", lab = TRUE, hc.order = TRUE, type = "full") 
+```
+## The k-means algorithm can be used to manually adjust K numbers to observe how the dataset clusters. I've chosen k values at random from 2,3,4 and 5, and a restart value of 25.
+```{r}
+set.seed(450)
+k2 <- kmeans(data1, centers = 2, nstart = 25) 
+k3 <- kmeans(data1, centers = 3, nstart = 25) 
+k4 <- kmeans(data1, centers = 4, nstart = 25) 
+k5 <- kmeans(data1, centers = 5, nstart = 25) 
+k2$size 
+k3$size 
+k4$size 
+k5$size 
+k21 <- fviz_cluster(k2, data = data1)
+k31 <- fviz_cluster(k3, data = data1)
+k41 <- fviz_cluster(k4, data = data1)
+k51 <- fviz_cluster(k5, data = data1)
+grid.arrange(k21,k31,k41,k51)
+```
+## Elbow Method 
+```{r}
+set.seed(450)
+ebow <- vector()
+for(i in 1:10) ebow[i] <- sum(kmeans(data1,i)$withinss)
+plot(1:10, ebow , type = "b" , main = paste('Cluster of Companies') , xlab = "Number of Clusters", ylab="ebow")
+```
+
+## Silhouette Method
+```{r}
+set.seed(450)
+fviz_nbclust(data1, kmeans, method = "silhouette")
+```
+## From above graph we find K clusters value "5"
+```{r}
+set.seed(450)
+k5 <- kmeans(data1, centers = 5, nstart = 25)
+fviz_cluster(k5, data = data1)
+```
+
+# B. Interpret the clusters with respect to the numerical variables used in forming the clusters. 
+```{r}
+print(k5)
+da %>% mutate(Cluster = k5$cluster) %>% group_by(Cluster) %>% summarise_all("mean")
+clusplot(data1,k5$cluster, main="Clusters",color = TRUE, labels = 2,lines = 0)
+```
+## From above plot and data the companies are group into a varous clusters
+ 
+##Cluster 1: MRK,PFE,GSK and JNJ
+##Cluster 2: ABT,AHM,AZN,BMY,LLY,NVS,SGP and WYE
+##Cluster 3: AGN and PHA
+##Cluster 4: AVE,ELN,MRX and WYE
+##Cluster 5: BAY,CHTT and IVX
+
+
+# C. Is there a pattern in the clusters with respect to the numerical variables (10 to 12)?
+```{r}
+# Displaying the matrix and combining the clusters with the non-selected features
+da1 <- data[,c(1,12,13,14)]
+da2 <- as.data.frame(list(k5$cluster))
+da1$cluster <- da2[,c(1)]
+da1 %>% arrange(desc(da1$cluster))
+data2 <- data[12:14] %>% mutate(Clusters=k5$cluster)
+ggplot(data2, mapping = aes(factor(Clusters), fill =Median_Recommendation))+geom_bar(position='dodge')+labs(x ='Clusters')
+ggplot(data2, mapping = aes(factor(Clusters),fill = Location))+geom_bar(position = 'dodge')+labs(x ='Clusters')
+ggplot(data2, mapping = aes(factor(Clusters),fill = Exchange))+geom_bar(position = 'dodge')+labs(x ='Clusters')
+```
+## the Median Recommendation and Cluster
+
+# D.Provide an appropriate name for each cluster using any or all of the variables in the dataset.
+
+## Cluster 1: Best Market
+## Cluster 2: Uncontrolled
+## Cluster 3: excellent
+## Cluster 4: take a risk 
+## Cluster 5: Workable
