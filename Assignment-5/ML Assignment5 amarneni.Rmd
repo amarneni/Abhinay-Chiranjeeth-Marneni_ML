@@ -1,0 +1,141 @@
+---
+title: "ML Assignment-5"
+author: "Abhinay Chiranjeeth Marneni"
+date: "2022-12-01"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## loading library functions packages
+```{r}
+library(ISLR)
+library(caret)
+library(dplyr)
+library(tidyverse)
+library(cluster)
+library(factoextra)
+library(proxy)
+library(Rfast)
+library(NbClust)
+library(ggplot2)
+```
+
+```{r}
+data<-read.csv("C:/Users/abhin/OneDrive/Documents/Assigments Buss 1sem/ML/Cereals.csv") # import the data
+row.names(data) <- data[,1]
+data <- data[-1]
+data.norm<-scale(data[c(-1,-2,-12)])
+view(data) # using view function to display the whole table str(data)  # to examine the data set structure
+head(data) # to get first 6rows of the data set
+summary(data) # to examine the data set summary
+```
+# To remove NA values from the data set, scale the data now.
+```{r}
+data1 <- na.omit(data)
+data1<- as.data.frame(na.omit(data1))#removing the Cereals dataset missing values 
+datascale <- scale(data1[,-c(1:3)])   # Scaling the dataset
+df <- as.data.frame(data1)
+summary(data1)
+```
+A.
+#Apply hierarchical clustering to the data using Euclidean distance to the normalized measurements.
+```{r}
+data_Euclidean <- dist(datascale, method = "euclidean") # Creating the dissimilarity matrix for data set through Euclidean distance measurements.
+DataWard.D <- hclust(data_Euclidean, method = "ward.D")
+```
+
+#Use Agnes to compare the clustering from  single linkage, complete linkage, average linkage, and Ward
+```{r}
+Single <- agnes(data1, method = "single")
+Complete <- agnes(data1, method = "complete")
+Average <- agnes(data1, method = "average")
+Ward <- agnes(data1, method = "ward")
+print(Single$ac)
+print(Complete$ac)
+print(Average$ac)
+print(Ward$ac)
+pltree(Single, cex=0.4, hang=-1, main = "Dendogram Agnes Single")
+pltree(Complete, cex=0.4, hang=-1, main = "Dendogram Agnes Complete")
+pltree(Average, cex=0.4, hang=-1, main = "Dendogram Agnes Average")
+pltree(Ward, cex=0.4, hang=-1, main = "Dendogram Agnes Ward")
+```
+# "Ward Method" is the best approach based on the results above.
+B.
+# How many clusters would you choose.
+
+```{r}
+Ward_Euclidean<- hclust(data_Euclidean , method = "ward.D" ) #Ward method is the optimum. As  the data are clustered using Ward  and Euclidean distance is applied to perform hierarchical clustering.
+```
+##Here, the elbow and silhouette approaches are used to determine the optimal number of clusters.
+## Elbow Method:
+```{r}
+fviz_nbclust(data1, hcut, method = "wss") +labs(title = "Optimal Number of Clusters using Elbow Method") +geom_vline(xintercept = 12, linetype = 2)
+```
+##Silhouette Method:
+```{r}
+fviz_nbclust(data1, hcut,  method = "silhouette") +labs(title = "Optimal Number of Clusters using Silhouette Method")
+```
+#Here, we can see from the outcomes of the elbow and silhouette approaches that 3 clusters would be the optimal number.
+# so iam choosing Silhouette Method kmean value 3
+```{r}
+plot(Ward_Euclidean, cex = 0.4)
+rect.hclust(Ward_Euclidean, k = 3, border = 1:3)
+```
+
+```{r}
+Group <- cutree(DataWard.D, k = 3)
+table(Group)
+data2 <- cbind.data.frame(data1, Group)
+```
+
+# C.
+
+#Partition the data.
+
+```{r}
+TrainData <- datascale [1:36,] # Partition 1
+TestData <- datascale [37:74,] # partition 2
+```
+
+#Use the cluster centroids from A to assign each record in partition B.
+```{r}
+Euclidean_Train <- dist(TrainData, method = "euclidean")
+DataWard.D1 <- hclust(Euclidean_Train, method = "ward.D")
+plot(DataWard.D1, cex = 0.4, hang = -1)
+rect.hclust(DataWard.D1, k = 3, border = 1:3)
+ClusterGroup <- cutree(DataWard.D1, k = 3)
+table(ClusterGroup)
+TrainData1 <- cbind.data.frame(TrainData, ClusterGroup)
+```
+
+#Create the Cluster centroids for above partition data
+```{r}
+Centroid_1 <- colMeans(TrainData1 [TrainData1 $ClusterGroup == "1",])
+Centroid_2 <- colMeans(TrainData1 [TrainData1 $ClusterGroup == "2",])
+Centroid_3 <- colMeans(TrainData1 [TrainData1 $ClusterGroup == "3",])
+Centroid_4 <- colMeans(TrainData1 [TrainData1 $ClusterGroup == "4",])
+Centroid <- rbind(Centroid_1, Centroid_2, Centroid_3, Centroid_4)
+CentroidTest <- rowMins(dist(TestData, Centroid[,-13]))
+CentroidPartition <- c(TrainData1 $ClusterGroup,CentroidTest)
+data3<- cbind(data2 ,CentroidPartition)
+table(data3$Group == data3 $CentroidPartition)# compared the total Data clusters with the TrainData and testData clusters
+table(data3$Group[37:74] == data3$CentroidPartition[37:74])
+```
+
+
+# D. 
+
+```{r}
+data4 <- data1[, c(4,7,11)]
+datadist1 <- dist(data4, method = "euclidean")
+DataWard.D2 <- hclust(datadist1, method = "ward.D")
+plot(DataWard.D2, cex = 0.4, hang = -1)
+rect.hclust(DataWard.D2, k = 3, border = 1:3)
+Group1 <- cutree(DataWard.D2, k = 3)
+table(Group1)
+aggregate(data4, by = list(cluster = Group1), mean)
+```
+# Determine the healthy cereals.I create a clusters base on  data of cereals i choose protein, fiber and vitamins and to know how much amount protein, fiber and vitamins  the cereals contain. So won't normalized data intained of that i analysis the cluster base on this three factory.4 clusters were formed after protein, fiber and vitamins clustering. The The elementary public schools has choosen Cluster 3, which has somany cereals and Some clusters were not accept because they lacked a suitable ratio of protein, fiber and vitamins. They either had a lot of protein and fiber, vitamins have  less amount compare to data.
