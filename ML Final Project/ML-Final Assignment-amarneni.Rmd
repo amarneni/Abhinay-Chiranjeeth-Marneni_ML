@@ -1,0 +1,187 @@
+---
+title: "ML Final Assignment"
+author: "Abhinay Chiranjeeth Marneni"
+date: "2022-12-16"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+**Data Exploration:**
+```{r}
+
+#Reading the data
+Data<- read.csv("C:/Users/abhin/OneDrive/Documents/Assigments Buss 1sem/ML/Mall_Customers.csv")
+head(Data)
+summary(Data)
+
+#Converting Gender column into dummy variables
+
+Male <- ifelse(Data$Gender=="Male" ,1,0)
+Female <- ifelse(Data$Gender=="Female" ,1,0)
+
+#Combining newly defined columns to the original dataset while removing CustomerID column.
+New_data<-cbind(Data[,-c(1,2)],Male,Female)
+
+#Normalizing the data:
+
+Norm_data<- scale(New_data)
+```
+
+# The Given  dataset contains a more majority of female clients compared to male customers.
+```{r}
+library(ggplot2)
+ggplot(Data, aes(x= Gender))+
+  scale_y_continuous(limits= c(0,120), breaks = seq(from= 5, to= 115, by= 10))+
+  scale_x_discrete(labels= c("Female", "Male"))+
+  ylab("Amount")+
+  theme_minimal()+
+  geom_bar(fill= c("dodgerblue3", "tomato3"), width = 0.5)
+# Ratio of Female to Male in a Pie Chart
+Gender_Table <- table(Data$Gender)
+Gender_Table
+Percent_Gender <- (table(Data$Gender)/sum(table(Data))) * 100
+Percent_Gender
+Gender_labels <- paste(c("Female","Male"), " ", Percent_Gender, "%", sep = " ")
+# Create pie chart
+pie(x = Gender_Table, labels = Gender_labels, col = c("dodgerblue3", "tomato3"))
+```
+# The plot of age range..
+```{r }
+ggplot(Data, aes(x = Age, fill = Gender, colour = Gender)) +
+  geom_histogram(bins = 10, position = "identity", alpha = 0.5)
+```
+## To check the major variables, I using the correlation matrix method
+```{r}
+library(ggcorrplot)                           
+set.seed(650)
+corr <- cor(Norm_data)
+ggcorrplot(corr, outline.color = "blue", lab = TRUE, hc.order = TRUE, type = "full") 
+```
+
+**Implementation of K-means algorithm:**
+## The k-means algorithm can be used to manually adjust K numbers to observe how the dataset clusters. I've chosen k values at random from 2,3,4 and 5.
+```{r}
+library(factoextra)
+library(gridExtra)
+set.seed(650)
+k2 <- kmeans(Norm_data, centers = 2) 
+k3 <- kmeans(Norm_data, centers = 3) 
+k4 <- kmeans(Norm_data, centers = 4) 
+k5 <- kmeans(Norm_data, centers = 5) 
+k2$size 
+k3$size 
+k4$size 
+k5$size 
+k21 <- fviz_cluster(k2, data =Norm_data)
+k31 <- fviz_cluster(k3, data = Norm_data)
+k41 <- fviz_cluster(k4, data = Norm_data)
+k51 <- fviz_cluster(k5, data = Norm_data)
+grid.arrange(k21,k31,k41,k51)
+```
+```{r}
+set.seed(650)
+
+
+library(dplyr)
+
+#Checking the optimal number of clusters to perform K-means algorithm
+fviz_nbclust(Norm_data,kmeans,method="wss")
+```
+
+
+*Based on the above plot, consdiering k = 2*
+
+```{r}
+
+#Implementing K-means algorithm
+k2<-kmeans(Norm_data,centers=2)
+
+#Visual representation of clusters
+fviz_cluster(k2,New_data,main=" clusters")
+
+#Assigning clusters to the original dataset
+assigned_data<-cbind(New_data,k2$cluster)
+
+#Finding mean within each column grouped by clusters for better interpretation
+mean_k2 <- New_data %>% mutate(Cluster = k2$cluster) %>% group_by(Cluster) %>% summarise_all("mean")
+head(mean_k2)
+```
+
+***Analysis of Clusters:***
+
+**Cluster 1:**
+
+*Customers with average age of 28 years have been grouped into first cluster.*
+*This group of customers has the maximum spending score of 69 percent, which indicates that young people are tend to spend more in malls than aged people.*
+*Among all the customers of this age group, females are 58% and males are 42%. This indicates that females spend the most at malls compared to men.*
+*Surprisingly, the average annual income of both the clusters is close to 60k dollars per annum.*
+
+**Cluster 2:**
+
+*This group consists of customers whose average age is 48 years.*
+*The spending score of this group of customers is very low compared to the first cluster.*
+*Even in this cluster, females take up a majority of the percentage.*
+*The average percentage of females who spend at malls is 53% whereas males is 47%.*
+*The average income of this group of customers is also close to 60k dollars per annum.*
+
+
+**Conclusion:**
+
+*By analyzing the spending patterns of customers in a mall, we can conclude that the customers below the age of 30 are the one's who are spending the most.*
+*Moreover, In all age groups, percentage of Women spending in the mall is greater than men.*
+
+*Therefore, in order to attract more customers to spend at malls, it would be advisable to have stores related to women like clothing and beauty products. This would add to the maximum profits at the mall.*
+
+
+
+
+**Verifying if there is any correlation exists between spending score variable and other variables using simple linear regression for better interpretation.**
+
+
+```{r}
+
+
+Model1<-lm(New_data$Spending_Score~.,data=New_data)
+summary(Model1)
+
+```
+
+*As we can see, age holds a significant relationship with the spending score(as the P value is too small). As we have a negative slope, we can conclude that there is a negative correlation. R square value is 10.86% which indicates that there is a very less variability between spending score and all other variables.*
+
+
+**Implementing a simple linear regression model on spending score and age variable based on the results of the above model.**
+
+```{r}
+
+Model2<- lm(New_data$Spending_Score~New_data$Age,data=New_data)
+summary(Model2)
+
+
+```
+
+*The results indicates the significant relationship between age and spending score. The P value and R square values are pretty close to the values observed with respect to the above model.*
+
+
+**Visually representing the relationship between age and Spending score variable.**
+```{r}
+library(esquisse)
+
+library(ggplot2)
+
+#Age Vs Spending Score
+ggplot(mean_k2) +
+ aes(x = Age, y = Spending_Score) +
+ geom_area(size = 1.5) +
+ theme_minimal()
+
+```
+
+
+*The above graph indicates that as the age increases, the spending score of customers in the mall is decreasing.*
